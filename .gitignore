@@ -12,6 +12,7 @@ data/
 models/
 app/
 db/
+temp/
 
 # Ignore Pipenv files (if you're using requirements.txt instead)
 Pipfile
