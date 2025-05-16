@@ -11,11 +11,24 @@ from functools import lru_cache
 from core.rag_pipeline import load_split_embed_store, create_rag_chain
 from langchain_google_genai import ChatGoogleGenerativeAI
 
+
 # Logging setup
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 persist_dir = os.path.join(os.path.dirname(__file__), 'db', 'chroma')
 temp_dir = "./temp"
 
@@ -50,7 +63,7 @@ async def upload(file: UploadFile, query: str = Form(...)):
     rag_chain = create_rag_chain(llm, vector_store)
 
     result = rag_chain.invoke({"input": query})
-    # logger.info(f"Query result: {result['answer']}")
+    logger.info(f"Query result: {result['answer']}")
     return JSONResponse(content={"answer": result["answer"]})
 
 
