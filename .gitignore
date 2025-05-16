@@ -3,6 +3,21 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+.DS_Store
+.idea/
+
+
+# Ignore folders:
+data/
+models/
+app/
+db/
+
+# Ignore Pipenv files (if you're using requirements.txt instead)
+Pipfile
+Pipfile.lock
+
+
 # C extensions
 *.so
 
